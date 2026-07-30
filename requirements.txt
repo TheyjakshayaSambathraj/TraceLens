@@ -1,0 +1,32 @@
+# --- Web framework -----------------------------------------------------------
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+starlette==0.41.3
+
+# --- Configuration & validation ------------------------------------------------
+pydantic==2.10.4
+pydantic-settings==2.7.0
+python-dotenv==1.0.1
+
+# --- Structured logging ---------------------------------------------------------
+structlog==24.4.0
+
+# --- Agent / LLM / RAG stack (wired starting Phase 2+) --------------------------
+langgraph==0.2.62
+langchain==0.3.14
+langchain-community==0.3.14
+langchain-google-genai==2.0.7
+langsmith==0.2.10
+faiss-cpu==1.14.3
+sentence-transformers==3.0.1
+
+# --- Persistence (wired starting the database phase) ----------------------------
+sqlalchemy==2.0.36
+
+# --- Dashboard (wired starting the dashboard phase) ------------------------------
+streamlit==1.41.1
+
+# --- Testing ----------------------------------------------------------------------
+pytest==8.3.4
+pytest-asyncio==0.25.0
+httpx==0.28.1

@@ -1,0 +1,62 @@
+version: "3.9"
+
+services:
+  api:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: tracelens-api
+    ports:
+      - "8000:8000"
+    environment:
+      - APP_ENV=development
+      - LOG_LEVEL=INFO
+      - LOG_JSON=true
+      - DATABASE_URL=sqlite:////data/tracelens.db
+      # Set these from your .env file or environment:
+      # - GOOGLE_API_KEY=your_google_api_key
+      # - LANGCHAIN_API_KEY=your_langsmith_api_key
+      # - LANGCHAIN_PROJECT=tracelens
+      # - LANGCHAIN_TRACING_V2=true
+    volumes:
+      - tracelens_data:/data
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/v1/health').read()",
+        ]
+      interval: 30s
+      timeout: 5s
+      start_period: 15s
+      retries: 3
+    restart: unless-stopped
+
+  dashboard:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: tracelens-dashboard
+    command:
+      [
+        "streamlit",
+        "run",
+        "dashboard/app.py",
+        "--server.port=8501",
+        "--server.address=0.0.0.0",
+        "--server.headless=true",
+      ]
+    ports:
+      - "8501:8501"
+    environment:
+      - TRACELENS_API_URL=http://api:8000/api/v1
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  tracelens_data:
+    driver: local

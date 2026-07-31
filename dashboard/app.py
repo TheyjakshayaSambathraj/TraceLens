@@ -41,10 +41,26 @@ st.set_page_config(
 )
 
 def _get_api_base() -> str:
-    # 1. Environment variables
-    raw = os.environ.get("TRACELES_API_URL") or os.environ.get("TRACELENS_API_URL")
+    raw = None
 
-    # 2. Local fallback
+    # 1. Streamlit Cloud secrets
+    try:
+        if "TRACELES_API_URL" in st.secrets:
+            raw = st.secrets["TRACELES_API_URL"]
+        elif "TRACELENS_API_URL" in st.secrets:
+            raw = st.secrets["TRACELENS_API_URL"]
+    except Exception:
+        pass
+
+    # 2. Environment variable TRACELES_API_URL
+    if not raw:
+        raw = os.environ.get("TRACELES_API_URL")
+
+    # 3. Environment variable TRACELENS_API_URL
+    if not raw:
+        raw = os.environ.get("TRACELENS_API_URL")
+
+    # 4. Local fallback
     if not raw:
         raw = "http://localhost:8000/api/v1"
 

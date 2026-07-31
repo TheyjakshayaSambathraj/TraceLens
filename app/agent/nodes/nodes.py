@@ -212,7 +212,16 @@ def make_decision_node(
             session_id=state.get("session_id"),
             error=str(e),
         )
-        raise
+        # Safe fallback to MockLLMProvider when live LLM provider fails (e.g. RateLimitError 429)
+        from app.services.llm_provider import MockLLMProvider
+        mock_provider = MockLLMProvider()
+        mock_model = mock_provider.get_model()
+        response_text = mock_model.invoke(_build_decision_prompt(state))
+        decision = _parse_decision_response(response_text)
+        return {
+            "decision": decision,
+            "decision_reason": response_text,
+        }
 
 
 def generate_response_node(state: AgentState) -> dict[str, Any]:

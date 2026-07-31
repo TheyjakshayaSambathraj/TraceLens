@@ -116,7 +116,10 @@ class GroqProvider:
             raise ValueError("MODEL_NAME configuration is required")
 
         self.settings = settings
-        self.model_name = settings.model_name
+        if not settings.model_name or settings.model_name.startswith("gemini"):
+            self.model_name = "llama-3.3-70b-versatile"
+        else:
+            self.model_name = settings.model_name
         self._model: BaseLanguageModel | None = None
 
     def get_model(self) -> BaseLanguageModel:
@@ -191,7 +194,8 @@ def create_llm_provider(settings: Settings, use_mock: bool = False) -> LLMProvid
         logger.info("using_mock_llm_provider")
         return MockLLMProvider()
 
-    if settings.llm_provider.lower() == "groq":
+    provider_name = settings.llm_provider.lower()
+    if provider_name == "groq" or (not settings.google_api_key and settings.groq_api_key):
         logger.info("using_groq_llm_provider")
         return GroqProvider(settings)
 

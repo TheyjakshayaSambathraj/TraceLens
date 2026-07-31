@@ -168,13 +168,26 @@ def get_instrumented_agent():
         retriever_service = RetrieverService(vector_store_path=str(vector_store_path))
 
         policy_dir = data_dir / "policies"
+        policy_dir.mkdir(parents=True, exist_ok=True)
+
         try:
             retriever_service.load(str(vector_store_path))
         except FileNotFoundError:
-            if policy_dir.exists():
-                vector_store = ingester.ingest(str(policy_dir))
-                ingester.save_vector_store(vector_store)
-                retriever_service.load(str(vector_store_path))
+            # Seed default policy document if policy_dir is empty (e.g. fresh volume mount)
+            if not list(policy_dir.glob("*.md")):
+                src_policy = Path("data") / "policies" / "hr_leave_policy.md"
+                dest_policy = policy_dir / "hr_leave_policy.md"
+                if src_policy.exists() and src_policy != dest_policy:
+                    import shutil
+                    shutil.copy(src_policy, dest_policy)
+                else:
+                    dest_policy.write_text(
+                        "# TraceLens HR Leave Policy\n\nSection 2.1: Standard Employees get 20 working days annual leave.\n",
+                        encoding="utf-8",
+                    )
+            vector_store = ingester.ingest(str(policy_dir))
+            ingester.save_vector_store(vector_store)
+            retriever_service.load(str(vector_store_path))
 
         employee_service = EmployeeService()
         use_mock = not (settings.google_api_key or settings.groq_api_key)

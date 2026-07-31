@@ -58,22 +58,28 @@ class RequestContextLoggingMiddleware(BaseHTTPMiddleware):
         )
 
         start_time = time.perf_counter()
-        logger.info(
-            "http_request_started",
-            method=request.method,
-            path=request.url.path,
-        )
+        try:
+            logger.info(
+                "http_request_started",
+                method=request.method,
+                path=request.url.path,
+            )
+        except Exception:
+            pass  # Never let logging crash the request
 
         response = await call_next(request)
 
         duration_ms = round((time.perf_counter() - start_time) * 1000, 2)
-        logger.info(
-            "http_request_completed",
-            method=request.method,
-            path=request.url.path,
-            status_code=response.status_code,
-            duration_ms=duration_ms,
-        )
+        try:
+            logger.info(
+                "http_request_completed",
+                method=request.method,
+                path=request.url.path,
+                status_code=response.status_code,
+                duration_ms=duration_ms,
+            )
+        except Exception:
+            pass  # Never let logging crash the request
 
         response.headers[REQUEST_ID_HEADER] = request_id
         response.headers[SESSION_ID_HEADER] = session_id

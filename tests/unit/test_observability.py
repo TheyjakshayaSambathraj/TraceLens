@@ -250,23 +250,28 @@ class TestLangSmithConfig:
 
     def test_config_from_env_disabled(self):
         """Test loading config with tracing disabled."""
+        from app.config.settings import get_settings
         with patch.dict("os.environ", {"LANGCHAIN_TRACING_V2": "false"}):
+            get_settings.cache_clear()
             config = LangSmithConfig.from_env()
             assert config.enabled is False
 
     def test_config_from_env_enabled_without_key(self):
         """Test that enabled tracing without API key is disabled."""
+        from app.config.settings import get_settings
         with patch.dict(
             "os.environ",
             {"LANGCHAIN_TRACING_V2": "true", "LANGCHAIN_API_KEY": ""},
             clear=False,
         ):
+            get_settings.cache_clear()
             config = LangSmithConfig.from_env()
             # Should disable if no key
             assert not config.is_configured()
 
     def test_config_from_env_with_key(self):
         """Test loading config with API key."""
+        from app.config.settings import get_settings
         with patch.dict(
             "os.environ",
             {
@@ -275,6 +280,7 @@ class TestLangSmithConfig:
                 "LANGCHAIN_PROJECT": "test-project",
             },
         ):
+            get_settings.cache_clear()
             config = LangSmithConfig.from_env()
             assert config.enabled is True
             assert config.api_key == "sk-test-key-123"

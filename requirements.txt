@@ -16,6 +16,7 @@ langgraph==0.2.62
 langchain==0.3.14
 langchain-community==0.3.14
 langchain-google-genai==2.0.7
+langchain-groq
 langsmith==0.2.10
 faiss-cpu==1.14.3
 sentence-transformers==3.0.1

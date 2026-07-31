@@ -27,8 +27,9 @@ htmlcov/
 
 # --- Database ------------------------------------------------------
 *.db
+*.db-*
 *.sqlite
-*.sqlite3
+*.sqlite*
 
 # --- Vector store artifacts -----------------------------------------
 *.faiss
@@ -44,3 +45,10 @@ Thumbs.db
 
 # --- Logs ---------------------------------------------------------------
 *.log
+
+# --- Scratch & Temp Scripts --------------------------------------------
+debug_agent.py
+request.json
+test_request.ps1
+test_scenario_a.json
+

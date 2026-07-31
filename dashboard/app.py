@@ -43,7 +43,7 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
     menu_items={
-        "About": "TraceLens — Enterprise AI Decision Governance Platform (PS-7.1)",
+        "About": "TraceLens — Enterprise AI Decision Governance Platform",
     },
 )
 
@@ -759,7 +759,7 @@ def render_sidebar() -> tuple[Optional[str], Optional[str], Optional[datetime], 
                 <div style="font-size: 32px;">🔍</div>
                 <div style="font-size: 18px; font-weight: 700; color: #e6edf3;">TraceLens</div>
                 <div style="font-size: 11px; color: #6e7681; margin-top: 4px;">
-                    AI Decision Governance<br>PS-7.1 Audit Platform
+                    Enterprise AI Decision Governance<br>Audit Platform
                 </div>
             </div>
             """,
@@ -822,37 +822,40 @@ def render_sidebar() -> tuple[Optional[str], Optional[str], Optional[datetime], 
 
         st.markdown("---")
 
-        # Demo scenario
-        st.markdown("#### 🎬 Demo Scenario")
+        # Decision request submission
+        st.markdown("#### ⚡ Decision Request")
         st.markdown(
-            '<span style="font-size:12px; color:#6e7681;">Run the PS-7.1 demo: '
-            'EMP-001 leave request</span>',
+            '<span style="font-size:12px; color:#6e7681;">Submit a request for AI evaluation and audit:</span>',
             unsafe_allow_html=True,
         )
-        demo_request = st.text_area(
+        request_input = st.text_area(
             "Request",
-            value="Can employee EMP-001 take 15 consecutive days of leave?",
-            height=80,
-            key="demo_request",
+            value="",
+            placeholder="Enter request (e.g. Can employee EMP-001 take 5 days of annual leave?)",
+            height=90,
+            key="user_request_input",
         )
-        demo_user = st.text_input("User ID", value="USER-001", key="demo_user")
+        request_user = st.text_input("User ID", value="USER-001", key="request_user_input")
 
-        if st.button("▶ Run Demo", use_container_width=True, type="primary"):
-            with st.spinner("Running agent…"):
-                result = api_post(
-                    "/agent/decide",
-                    {
-                        "request": demo_request,
-                        "user_id": demo_user,
-                        "session_id": None,
-                    },
-                )
-            if result:
-                new_session_id = result.get("session_id", "")
-                st.session_state["selected_session_id"] = new_session_id
-                st.success(f"✅ Agent completed — Decision: **{result.get('decision')}**")
-                st.info(f"Session: `{new_session_id}`")
-                st.rerun()
+        if st.button("⚡ Evaluate Request", use_container_width=True, type="primary"):
+            if not request_input.strip():
+                st.warning("Please enter a decision request.")
+            else:
+                with st.spinner("Evaluating request and generating audit trail…"):
+                    result = api_post(
+                        "/agent/decide",
+                        {
+                            "request": request_input.strip(),
+                            "user_id": request_user.strip() or "USER-001",
+                            "session_id": None,
+                        },
+                    )
+                if result:
+                    new_session_id = result.get("session_id", "")
+                    st.session_state["selected_session_id"] = new_session_id
+                    st.success(f"✅ Decision: **{result.get('decision')}**")
+                    st.info(f"Session: `{new_session_id}`")
+                    st.rerun()
 
         st.markdown("---")
 
@@ -949,7 +952,7 @@ def main() -> None:
                 <h1 style="font-size: 32px; font-weight: 800; color: #e6edf3;">TraceLens</h1>
                 <p style="font-size: 16px; color: #8b949e; max-width: 600px; margin: 0 auto 32px;">
                     Enterprise AI Decision Governance Platform<br>
-                    AIVER PS-7.1 — Decision Path Auditor
+                    Autonomous Decision Path Auditor & Governance Infrastructure
                 </p>
             </div>
             """,
@@ -974,11 +977,10 @@ def main() -> None:
             st.markdown(
                 """
                 <div class="metric-card">
-                    <div style="font-size: 28px; margin-bottom: 8px;">🎬</div>
-                    <div class="metric-label">Demo Scenario</div>
+                    <div style="font-size: 28px; margin-bottom: 8px;">⚡</div>
+                    <div class="metric-label">Evaluate Request</div>
                     <div style="color: #8b949e; font-size: 13px; margin-top: 8px;">
-                        Use the sidebar demo to run a live leave decision
-                        and see the complete audit trail reconstructed.
+                        Submit a custom request in the sidebar to evaluate policy decisions and generate live audit records.
                     </div>
                 </div>
                 """,
@@ -992,7 +994,7 @@ def main() -> None:
                     <div class="metric-label">PII Protected</div>
                     <div style="color: #8b949e; font-size: 13px; margin-top: 8px;">
                         All audit records are PII-redacted before persistence.
-                        Only sanitized evidence is displayed.
+                        Only sanitized evidence is stored and displayed.
                     </div>
                 </div>
                 """,
@@ -1001,16 +1003,16 @@ def main() -> None:
 
         st.markdown("---")
 
-        # PS-7.1 compliance summary
-        st.markdown("### ✅ PS-7.1 Compliance Coverage")
+        # Platform capabilities overview
+        st.markdown("### 🛡️ Platform Governance Capabilities")
         compliance_items = [
-            ("Instrumented Agent Wrapper", "Captures input, tools, retrieval, decision, output events"),
-            ("Decision Path Reconstruction", "Given session_id → complete structured timeline"),
-            ("Decision Summary Generator", "Plain-English summary grounded in audit evidence"),
-            ("PII Redaction Layer", "Applied before persistence — zero raw PII in audit store"),
-            ("Queryability", "By session ID, user ID, time range, decision outcome"),
-            ("Regulatory Challenge Response", "Draft formal response grounded in audit path"),
-            ("LangSmith Correlation", "trace_id links TraceLens record to LangSmith observability"),
+            ("Instrumented Agent Wrapper", "Captures input, tools, retrieval, decision, output events in real-time"),
+            ("Decision Path Reconstruction", "Given session ID → reconstructs complete structured timeline"),
+            ("Decision Summary Generator", "Plain-English narrative grounded in evidence without CoT exposure"),
+            ("PII Redaction Layer", "Applied prior to persistence — zero raw PII stored in audit database"),
+            ("Governance Queryability", "Query by session ID, user ID, time range, and decision outcome"),
+            ("Regulatory Challenge Response", "Generates draft formal compliance response grounded in audit path"),
+            ("Observability Correlation", "Trace ID links TraceLens audit record to system observability"),
         ]
         for item, desc in compliance_items:
             st.markdown(f"✅ **{item}** — {desc}")

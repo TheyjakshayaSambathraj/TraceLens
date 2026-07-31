@@ -71,8 +71,12 @@ def configure_logging(settings: Settings) -> None:
     handler = logging.StreamHandler(stream=sys.stdout)
     handler.setFormatter(formatter)
 
+    # File handler for reliable logging (Windows cp1252 can silently drop stdout)
+    file_handler = logging.FileHandler("tracelens_debug.log", encoding="utf-8", mode="a")
+    file_handler.setFormatter(formatter)
+
     root_logger = logging.getLogger()
-    root_logger.handlers = [handler]
+    root_logger.handlers = [handler, file_handler]
     root_logger.setLevel(log_level)
 
     # Route common noisy/duplicate third-party loggers through the same

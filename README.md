@@ -238,7 +238,10 @@ All configuration is environment-variable driven. See `.env.example` for the ful
 
 | Variable | Purpose | Required |
 |---|---|:---:|
-| `GOOGLE_API_KEY` | Gemini API key (for agent execution) | For live agent |
+| `GOOGLE_API_KEY` | Gemini API key (for agent execution) | Optional (Required if using Gemini) |
+| `GROQ_API_KEY` | Groq API key (for alternative LLM provider) | Optional (Required if using Groq) |
+| `LLM_PROVIDER` | LLM provider (`gemini` or `groq`) | No (default: `groq` or `gemini`) |
+| `MODEL_NAME` | LLM model identifier | No (default: `gemini-2.5-flash` or `llama-3.3-70b-versatile`) |
 | `LANGCHAIN_API_KEY` | LangSmith API key | No |
 | `LANGCHAIN_PROJECT` | LangSmith project name | No |
 | `LANGCHAIN_TRACING_V2` | Enable LangSmith tracing | No |
@@ -246,8 +249,19 @@ All configuration is environment-variable driven. See `.env.example` for the ful
 | `APP_ENV` | `local` / `development` / `staging` / `production` | No |
 | `LOG_LEVEL` | `DEBUG` / `INFO` / `WARNING` / `ERROR` | No |
 | `LOG_JSON` | JSON logs (true) vs console logs (false) | No |
-| `MODEL_NAME` | LLM identifier | No |
 | `CORS_ALLOW_ORIGINS` | Comma-separated allowed origins | No |
+
+---
+
+## Cloud Deployment (Render Blueprint)
+
+TraceLens includes a production-ready `render.yaml` infrastructure blueprint for deploying both the FastAPI backend and Streamlit dashboard to **Render**.
+
+1. Connect your repository (`https://github.com/TheyjakshayaSambathraj/TraceLens.git`) on [Render](https://render.com).
+2. Render will automatically detect `render.yaml` and configure:
+   - `tracelens-api`: FastAPI web service with persistent disk for SQLite database `/srv/app/data/tracelens.db`.
+   - `tracelens-dashboard`: Streamlit frontend service.
+3. Set environment variables `GOOGLE_API_KEY` (or `GROQ_API_KEY`) and `TRACELENS_API_URL` in the Render dashboard.
 
 ---
 

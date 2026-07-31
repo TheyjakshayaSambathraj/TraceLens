@@ -10,6 +10,7 @@ import structlog
 from typing import Protocol
 
 from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_groq import ChatGroq
 from langchain_core.language_models import BaseLanguageModel
 
 from app.config.settings import Settings
@@ -55,9 +56,9 @@ class GeminiProvider:
 
         self.settings = settings
         self.model_name = settings.model_name
-        self._model: LanguageModel | None = None
+        self._model: BaseLanguageModel | None = None
 
-    def get_model(self) -> LanguageModel:
+    def get_model(self) -> BaseLanguageModel:
         """Get or create the ChatGoogleGenerativeAI instance.
 
         Uses lazy initialization to defer API client creation until
@@ -74,6 +75,57 @@ class GeminiProvider:
             self._model = ChatGoogleGenerativeAI(
                 model=self.model_name,
                 google_api_key=self.settings.google_api_key,
+                temperature=0.7,
+            )
+
+        return self._model
+
+
+class GroqProvider:
+    """Groq LLM provider.
+
+    Constructs a ChatGroq instance using application
+    configuration. The API key and model name are sourced from settings.
+    """
+
+    def __init__(self, settings: Settings):
+        """Initialize the Groq provider.
+
+        Args:
+            settings: Application settings containing API key and model name.
+
+        Raises:
+            ValueError: If the required configuration is missing.
+        """
+        if not settings.groq_api_key:
+            logger.error("missing_groq_api_key")
+            raise ValueError(
+                "GROQ_API_KEY environment variable is required "
+                "for the Groq LLM provider"
+            )
+
+        if not settings.model_name:
+            logger.error("missing_model_name")
+            raise ValueError("MODEL_NAME configuration is required")
+
+        self.settings = settings
+        self.model_name = settings.model_name
+        self._model: BaseLanguageModel | None = None
+
+    def get_model(self) -> BaseLanguageModel:
+        """Get or create the ChatGroq instance.
+
+        Returns:
+            ChatGroq LLM instance.
+        """
+        if self._model is None:
+            logger.info(
+                "initializing_groq_model",
+                model=self.model_name,
+            )
+            self._model = ChatGroq(
+                model=self.model_name,
+                groq_api_key=self.settings.groq_api_key,
                 temperature=0.7,
             )
 
@@ -131,6 +183,10 @@ def create_llm_provider(settings: Settings, use_mock: bool = False) -> LLMProvid
     if use_mock:
         logger.info("using_mock_llm_provider")
         return MockLLMProvider()
+
+    if settings.llm_provider.lower() == "groq":
+        logger.info("using_groq_llm_provider")
+        return GroqProvider(settings)
 
     logger.info("using_gemini_llm_provider")
     return GeminiProvider(settings)

@@ -81,6 +81,7 @@ class Settings(BaseSettings):
 
     # --- Third-party integrations (consumed starting in later phases) ------------
     google_api_key: str | None = Field(default=None)
+    groq_api_key: str | None = Field(default=None)
     langchain_api_key: str | None = Field(default=None)
     langchain_project: str = Field(default="tracelens")
     langchain_tracing_v2: bool = Field(default=False)
@@ -90,6 +91,7 @@ class Settings(BaseSettings):
     database_url: str = Field(default="sqlite:///./tracelens.db")
 
     # --- Model configuration -------------------------------------------------------
+    llm_provider: str = Field(default="gemini")
     model_name: str = Field(default="gemini-2.5-flash")
 
     # --- CORS ------------------------------------------------------------------------

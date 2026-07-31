@@ -91,11 +91,11 @@ def get_summary_service() -> DecisionSummaryService:
         DecisionSummaryService instance.
     """
     try:
-        from app.services.llm_provider import GeminiProvider
+        from app.services.llm_provider import create_llm_provider
         from app.config.settings import get_settings
         settings = get_settings()
-        if settings.google_api_key:
-            provider = GeminiProvider(settings)
+        if settings.google_api_key or settings.groq_api_key:
+            provider = create_llm_provider(settings)
             return DecisionSummaryService(llm_provider=provider)
     except Exception as exc:
         logger.warning("summary_service_llm_unavailable", error=str(exc))
@@ -110,11 +110,11 @@ def get_challenge_generator() -> RegulatoryChallengegenerator:
         RegulatoryChallengegenerator instance.
     """
     try:
-        from app.services.llm_provider import GeminiProvider
+        from app.services.llm_provider import create_llm_provider
         from app.config.settings import get_settings
         settings = get_settings()
-        if settings.google_api_key:
-            provider = GeminiProvider(settings)
+        if settings.google_api_key or settings.groq_api_key:
+            provider = create_llm_provider(settings)
             return RegulatoryChallengegenerator(llm_provider=provider)
     except Exception as exc:
         logger.warning("challenge_generator_llm_unavailable", error=str(exc))
@@ -152,7 +152,7 @@ def get_instrumented_agent():
         from app.rag.retriever import RetrieverService
         from app.rag.ingest import DocumentIngestionPipeline
         from app.services.employee import EmployeeService
-        from app.services.llm_provider import GeminiProvider
+        from app.services.llm_provider import create_llm_provider
         from app.agent.graph import LeaveDecisionAgent
         from app.observability.instrumentation import InstrumentedAgent
         from app.observability.publisher import get_publisher
@@ -177,7 +177,7 @@ def get_instrumented_agent():
                 retriever_service.load(str(vector_store_path))
 
         employee_service = EmployeeService()
-        llm_provider = GeminiProvider(settings)
+        llm_provider = create_llm_provider(settings)
         agent = LeaveDecisionAgent(retriever_service, employee_service, llm_provider)
 
         _instrumented_agent_instance = InstrumentedAgent(

@@ -1,0 +1,47 @@
+services:
+  # ---------------------------------------------------------
+  # TraceLens API Service
+  # ---------------------------------------------------------
+  - type: web
+    name: tracelens-api
+    env: docker
+    dockerfilePath: ./docker/Dockerfile
+    # For the API, we run uvicorn
+    dockerCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/v1/health
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: LOG_LEVEL
+        value: INFO
+      - key: LOG_JSON
+        value: "true"
+      - key: DATABASE_URL
+        value: sqlite:////srv/app/data/tracelens.db
+      - key: GOOGLE_API_KEY
+        sync: false
+      - key: LANGCHAIN_API_KEY
+        sync: false
+      - key: LANGCHAIN_PROJECT
+        value: tracelens
+      - key: LANGCHAIN_TRACING_V2
+        value: "false"
+    disk:
+      name: tracelens-data
+      mountPath: /srv/app/data
+      sizeGB: 1
+
+  # ---------------------------------------------------------
+  # TraceLens Dashboard
+  # ---------------------------------------------------------
+  - type: web
+    name: tracelens-dashboard
+    env: docker
+    dockerfilePath: ./docker/Dockerfile
+    # For the dashboard, we run streamlit
+    dockerCommand: streamlit run dashboard/app.py --server.port=$PORT --server.address=0.0.0.0 --server.headless=true
+    envVars:
+      - key: TRACELENS_API_URL
+        # Point this to your tracelens-api external URL + /api/v1
+        # E.g. https://tracelens-api.onrender.com/api/v1
+        sync: false

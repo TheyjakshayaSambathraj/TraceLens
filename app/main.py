@@ -12,6 +12,13 @@ or via the provided Docker image (see ``docker/Dockerfile``).
 
 from __future__ import annotations
 
+import sys
+
+if sys.stdout.encoding != 'utf-8':
+    sys.stdout.reconfigure(encoding='utf-8')
+if sys.stderr.encoding != 'utf-8':
+    sys.stderr.reconfigure(encoding='utf-8')
+
 from contextlib import asynccontextmanager
 from typing import AsyncIterator
 

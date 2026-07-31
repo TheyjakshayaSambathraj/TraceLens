@@ -147,6 +147,7 @@ def create_app() -> FastAPI:
         return {
             "app": "TraceLens",
             "status": "ok",
+            "version": "v2-debug-500",
             "health": f"{settings.api_prefix}/health",
         }
 

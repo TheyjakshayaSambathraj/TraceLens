@@ -27,7 +27,22 @@ import requests
 import streamlit as st
 
 def _get_api_base() -> str:
-    raw = os.environ.get("TRACELENS_API_URL", "http://localhost:8000/api/v1").strip().rstrip("/")
+    # 1. Environment variables
+    raw = os.environ.get("TRACELES_API_URL") or os.environ.get("TRACELENS_API_URL")
+
+    # 2. Streamlit secrets
+    if not raw:
+        try:
+            if hasattr(st, "secrets") and st.secrets:
+                raw = st.secrets.get("TRACELES_API_URL") or st.secrets.get("TRACELENS_API_URL")
+        except Exception:
+            pass
+
+    # 3. Local fallback
+    if not raw:
+        raw = "http://localhost:8000/api/v1"
+
+    raw = raw.strip().rstrip("/")
     if not raw.endswith("/api/v1"):
         return f"{raw}/api/v1"
     return raw

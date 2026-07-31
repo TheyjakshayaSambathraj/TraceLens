@@ -26,11 +26,14 @@ from typing import Optional
 import requests
 import streamlit as st
 
-# ---------------------------------------------------------------------------
-# Configuration
-# ---------------------------------------------------------------------------
+def _get_api_base() -> str:
+    raw = os.environ.get("TRACELENS_API_URL", "http://localhost:8000/api/v1").strip().rstrip("/")
+    if not raw.endswith("/api/v1"):
+        return f"{raw}/api/v1"
+    return raw
 
-API_BASE = os.environ.get("TRACELENS_API_URL", "http://localhost:8000/api/v1")
+
+API_BASE = _get_api_base()
 REQUEST_TIMEOUT = 30
 
 # ---------------------------------------------------------------------------

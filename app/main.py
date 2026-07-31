@@ -128,6 +128,14 @@ def create_app() -> FastAPI:
             allow_headers=["*"],
         )
 
+    @application.get("/")
+    async def root() -> dict[str, str]:
+        return {
+            "app": "TraceLens",
+            "status": "ok",
+            "health": f"{settings.api_prefix}/health",
+        }
+
     # Health check (Phase 1)
     application.include_router(health_router, prefix=settings.api_prefix)
 

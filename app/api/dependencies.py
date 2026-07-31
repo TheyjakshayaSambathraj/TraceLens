@@ -177,7 +177,8 @@ def get_instrumented_agent():
                 retriever_service.load(str(vector_store_path))
 
         employee_service = EmployeeService()
-        llm_provider = create_llm_provider(settings)
+        use_mock = not (settings.google_api_key or settings.groq_api_key)
+        llm_provider = create_llm_provider(settings, use_mock=use_mock)
         agent = LeaveDecisionAgent(retriever_service, employee_service, llm_provider)
 
         _instrumented_agent_instance = InstrumentedAgent(

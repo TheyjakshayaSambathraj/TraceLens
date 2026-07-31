@@ -12,6 +12,8 @@ services:
     envVars:
       - key: APP_ENV
         value: production
+      - key: PYTHON_VERSION
+        value: 3.12.8
       - key: LOG_LEVEL
         value: INFO
       - key: LOG_JSON
@@ -41,6 +43,8 @@ services:
     # For the dashboard, we run streamlit
     dockerCommand: streamlit run dashboard/app.py --server.port=$PORT --server.address=0.0.0.0 --server.headless=true
     envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.8
       - key: TRACELENS_API_URL
         # Point this to your tracelens-api external URL + /api/v1
         # E.g. https://tracelens-api.onrender.com/api/v1

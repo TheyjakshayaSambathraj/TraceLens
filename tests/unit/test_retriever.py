@@ -175,5 +175,6 @@ class TestRetrieverServiceIntegration:
 
     def test_missing_vector_store_raises_error(self, temp_vector_store):
         """Test that missing vector store raises FileNotFoundError."""
+        from app.rag.retriever import RetrieverService
         with pytest.raises(FileNotFoundError):
             RetrieverService(vector_store_path="/nonexistent/path")

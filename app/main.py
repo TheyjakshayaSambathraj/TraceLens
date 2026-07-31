@@ -91,14 +91,6 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
         # LangSmith unavailability must never block startup
         logger.warning("langsmith_config_failed", error=str(exc))
 
-    # --- Agent & vector store warm-up ---
-    try:
-        from app.api.dependencies import get_instrumented_agent
-        get_instrumented_agent()
-        logger.info("agent_warmed_up")
-    except Exception as exc:
-        logger.warning("agent_warmup_failed", error=str(exc))
-
     yield
 
     logger.info("application_shutdown")

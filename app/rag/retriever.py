@@ -8,8 +8,7 @@ from __future__ import annotations
 
 import os
 import structlog
-from langchain_community.vectorstores import FAISS
-from langchain_community.embeddings import HuggingFaceEmbeddings
+from app.rag.vector_store import DeterministicVectorStore
 
 from app.schemas.retrieval import RetrievedDocument, RetrievalResult
 
@@ -20,7 +19,7 @@ class RetrieverService:
     """Service for retrieving relevant policy documents from the vector store.
 
     This service handles:
-    - Loading the FAISS index
+    - Loading the index
     - Executing similarity searches
     - Formatting results into structured objects
     - Including metadata for auditability
@@ -35,8 +34,8 @@ class RetrieverService:
         """Initialize the retriever service.
 
         Args:
-            vector_store_path: Path to the persisted FAISS index.
-            embedding_model: HuggingFace embedding model identifier.
+            vector_store_path: Path to the persisted index.
+            embedding_model: Embedding model identifier (kept for compatibility).
             top_k: Number of documents to retrieve per query.
 
         Raises:
@@ -59,7 +58,7 @@ class RetrieverService:
         logger.info("retriever_initialized", vector_store_path=vector_store_path)
 
     def load(self, vector_store_path: str | None = None) -> None:
-        """Load a persisted FAISS vector store from disk."""
+        """Load a persisted vector store from disk."""
         if vector_store_path is not None:
             self.vector_store_path = vector_store_path
 
@@ -70,13 +69,8 @@ class RetrieverService:
                 "Run ingestion first with: python -m app.rag.ingest"
             )
 
-        if self._embeddings is None:
-            self._embeddings = HuggingFaceEmbeddings(model_name=self.embedding_model)
-
-        self.vector_store = FAISS.load_local(
-            self.vector_store_path,
-            self._embeddings,
-            allow_dangerous_deserialization=True,
+        self.vector_store = DeterministicVectorStore.load_local(
+            self.vector_store_path
         )
         logger.info("vector_store_loaded", path=self.vector_store_path)
 

@@ -11,15 +11,12 @@ python-dotenv==1.0.1
 # --- Structured logging ---------------------------------------------------------
 structlog==24.4.0
 
-# --- Agent / LLM / RAG stack (wired starting Phase 2+) --------------------------
+# --- Agent / LLM / RAG stack ---------------------------------------------------
 langgraph==0.2.62
 langchain==0.3.14
 langchain-community==0.3.14
-langchain-google-genai==2.0.7
 langchain-groq
 langsmith==0.2.10
-faiss-cpu==1.14.3
-sentence-transformers==3.0.1
 
 # --- Persistence (wired starting the database phase) ----------------------------
 sqlalchemy==2.0.36

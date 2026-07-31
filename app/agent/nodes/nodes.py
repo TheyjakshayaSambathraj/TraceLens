@@ -119,8 +119,8 @@ def retrieve_employee_node(
         if match:
             employee_id = match.group(1).upper()
         else:
-            logger.info("employee_id_not_found_defaulting", request=request, fallback="EMP-001")
-            employee_id = "EMP-001"
+            logger.error("employee_id_not_found", request=request)
+            raise ValueError(f"Could not extract employee ID from request: '{request}'")
 
         # Retrieve employee information
         employee_data = employee_service.get_employee_info(employee_id)

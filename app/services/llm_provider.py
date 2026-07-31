@@ -9,7 +9,6 @@ from __future__ import annotations
 import structlog
 from typing import Protocol
 
-from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_groq import ChatGroq
 from langchain_core.language_models import BaseLanguageModel
 
@@ -68,6 +67,14 @@ class GeminiProvider:
             ChatGoogleGenerativeAI LLM instance.
         """
         if self._model is None:
+            try:
+                from langchain_google_genai import ChatGoogleGenerativeAI
+            except ImportError as exc:
+                raise ImportError(
+                    "langchain-google-genai package is required for GeminiProvider. "
+                    "Install it via pip install langchain-google-genai."
+                ) from exc
+
             logger.info(
                 "initializing_gemini_model",
                 model=self.model_name,

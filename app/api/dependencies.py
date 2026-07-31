@@ -167,10 +167,10 @@ def get_instrumented_agent():
         ingester = DocumentIngestionPipeline(vector_store_path=str(vector_store_path))
         retriever_service = RetrieverService(vector_store_path=str(vector_store_path))
 
-        if vector_store_path.exists():
+        policy_dir = data_dir / "policies"
+        try:
             retriever_service.load(str(vector_store_path))
-        else:
-            policy_dir = data_dir / "policies"
+        except FileNotFoundError:
             if policy_dir.exists():
                 vector_store = ingester.ingest(str(policy_dir))
                 ingester.save_vector_store(vector_store)

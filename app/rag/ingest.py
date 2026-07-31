@@ -17,8 +17,7 @@ from typing import Optional
 import structlog
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import TextLoader
-from langchain_community.vectorstores import FAISS
-from langchain_community.embeddings import HuggingFaceEmbeddings
+from app.rag.vector_store import DeterministicVectorStore
 
 logger = structlog.get_logger(__name__)
 
@@ -115,37 +114,33 @@ class DocumentIngestionPipeline:
 
     def create_embeddings_and_store(
         self, chunks: list, use_gpu: bool = False
-    ) -> FAISS:
-        """Create embeddings and store in FAISS vector store.
+    ) -> DeterministicVectorStore:
+        """Create document store for chunks.
 
         Args:
             chunks: List of chunked Document objects.
-            use_gpu: Whether to use GPU for embeddings (requires PyTorch with CUDA).
+            use_gpu: Parameter kept for signature compatibility.
 
         Returns:
-            FAISS vector store instance.
+            DeterministicVectorStore instance.
         """
         logger.info(
-            "creating_embeddings", model=self.embedding_model, use_gpu=use_gpu
+            "creating_document_store", count=len(chunks)
         )
 
-        embeddings = HuggingFaceEmbeddings(
-            model_name=self.embedding_model,
-        )
-
-        vector_store = FAISS.from_documents(chunks, embeddings)
+        vector_store = DeterministicVectorStore.from_documents(chunks)
         logger.info("vector_store_created", num_documents=len(chunks))
 
         return vector_store
 
-    def ingest(self, policy_directory: str) -> FAISS:
+    def ingest(self, policy_directory: str) -> DeterministicVectorStore:
         """Run the complete ingestion pipeline.
 
         Args:
             policy_directory: Path to directory containing policy documents.
 
         Returns:
-            FAISS vector store instance.
+            DeterministicVectorStore instance.
 
         Raises:
             FileNotFoundError: If policy directory does not exist.
@@ -161,22 +156,21 @@ class DocumentIngestionPipeline:
 
         return vector_store
 
-    def save_vector_store(self, vector_store: FAISS) -> None:
-        """Persist the FAISS index to disk.
+    def save_vector_store(self, vector_store: DeterministicVectorStore) -> None:
+        """Persist the index to disk.
 
         Args:
-            vector_store: FAISS vector store to persist.
+            vector_store: DeterministicVectorStore to persist.
         """
         os.makedirs(self.vector_store_path, exist_ok=True)
         vector_store.save_local(self.vector_store_path)
         logger.info("vector_store_saved", path=self.vector_store_path)
 
-    def load_vector_store(self) -> FAISS:
-        """Load a persisted FAISS index from disk.
+    def load_vector_store(self) -> DeterministicVectorStore:
+        """Load a persisted index from disk.
 
-        Args:
-            Returns:
-            FAISS vector store instance.
+        Returns:
+            DeterministicVectorStore instance.
 
         Raises:
             FileNotFoundError: If the vector store has not been created yet.
@@ -190,11 +184,8 @@ class DocumentIngestionPipeline:
                 "Run ingestion first."
             )
 
-        embeddings = HuggingFaceEmbeddings(
-            model_name=self.embedding_model,
-        )
-        vector_store = FAISS.load_local(
-            self.vector_store_path, embeddings, allow_dangerous_deserialization=True
+        vector_store = DeterministicVectorStore.load_local(
+            self.vector_store_path
         )
         logger.info("vector_store_loaded", path=self.vector_store_path)
 

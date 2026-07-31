@@ -1,0 +1,138 @@
+[
+  {
+    "page_content": "# TraceLens Corp - HR Leave Policy\n\n**Effective Date:** January 1, 2024  \n**Version:** 2.0  \n**Document ID:** POL-HR-LEAVE-2024\n\n---\n\n## 1. Introduction\n\nThis policy establishes the leave entitlements, approval procedures, and restrictions for all employees of TraceLens Corp. All employees are entitled to annual leave, subject to business continuity requirements and this policy.\n\nThis is a fictional policy document created for demonstration purposes only.\n\n---\n\n## 2. Leave Entitlements",
+    "metadata": {
+      "source": "hr_leave_policy.md",
+      "document_id": "hr_leave_policy",
+      "chunk_id": "chunk_0000"
+    }
+  },
+  {
+    "page_content": "---\n\n## 2. Leave Entitlements\n\n### 2.1 Annual Leave Allowance\n\n- **Standard Employees:** 20 working days per calendar year\n- **Senior/Management Employees:** 25 working days per calendar year\n- **Employees with 5+ years tenure:** Additional 5 days bonus leave\n- Leave year runs from January 1 to December 31\n\n### 2.2 Accrual",
+    "metadata": {
+      "source": "hr_leave_policy.md",
+      "document_id": "hr_leave_policy",
+      "chunk_id": "chunk_0001"
+    }
+  },
+  {
+    "page_content": "### 2.2 Accrual\n\nLeave accrues on the first day of each month at 1/12 of the annual entitlement. Employees may not draw leave before it accrues except by written approval of their direct manager and HR.\n\n### 2.3 Maximum Consecutive Leave",
+    "metadata": {
+      "source": "hr_leave_policy.md",
+      "document_id": "hr_leave_policy",
+      "chunk_id": "chunk_0002"
+    }
+  },
+  {
+    "page_content": "### 2.3 Maximum Consecutive Leave\n\n- **Standard employees:** Maximum 10 consecutive working days without approval from HR\n- **Management employees:** Maximum 15 consecutive working days without approval from Director level\n- **Periods exceeding limits:** Require written approval from the HR Director or CEO\n\n### 2.4 Carry-Forward Rules",
+    "metadata": {
+      "source": "hr_leave_policy.md",
+      "document_id": "hr_leave_policy",
+      "chunk_id": "chunk_0003"
+    }
+  },
+  {
+    "page_content": "### 2.4 Carry-Forward Rules\n\n- Employees may carry forward a maximum of **5 days** to the following calendar year\n- Carry-forward leave must be taken within the first half of the new calendar year (by June 30)\n- Any unused carry-forward days expire on June 30 and cannot be compensated\n- Exceptional carry-forward may be approved by HR Director if business continuity requires it\n\n### 2.5 Restricted Periods\n\nThe following periods have restricted leave approval:",
+    "metadata": {
+      "source": "hr_leave_policy.md",
+      "document_id": "hr_leave_policy",
+      "chunk_id": "chunk_0004"
+    }
+  },
+  {
+    "page_content": "### 2.5 Restricted Periods\n\nThe following periods have restricted leave approval:\n\n- **November 1 - December 31:** Restricted due to year-end reporting and financial closures\n  - Maximum 5 consecutive days approval unless approved by CFO\n  - Multiple employees in the same department cannot be on leave simultaneously\n\n- **June 1 - July 31:** Restricted due to strategic planning cycles\n  - Team leads require director approval\n  - No more than 30% of a team can be on leave simultaneously",
+    "metadata": {
+      "source": "hr_leave_policy.md",
+      "document_id": "hr_leave_policy",
+      "chunk_id": "chunk_0005"
+    }
+  },
+  {
+    "page_content": "### 2.6 Manager-Required Approval\n\nCertain circumstances require explicit manager approval:\n\n- Any leave request submitted less than 10 working days in advance\n- Any request from employees in critical roles (as defined in role matrix)\n- Any request during restricted periods\n- Any request exceeding normal entitlements\n\n---\n\n## 3. Leave Request Procedures\n\n### 3.1 Submission Requirements",
+    "metadata": {
+      "source": "hr_leave_policy.md",
+      "document_id": "hr_leave_policy",
+      "chunk_id": "chunk_0006"
+    }
+  },
+  {
+    "page_content": "---\n\n## 3. Leave Request Procedures\n\n### 3.1 Submission Requirements\n\n1. Employees must submit leave requests at least **10 working days** in advance\n2. Requests must be submitted through the leave management system\n3. The request must include:\n   - Dates of leave (start and end dates)\n   - Reason for leave (optional but recommended)\n   - Confirmation of work handover plan\n\n### 3.2 Approval Process",
+    "metadata": {
+      "source": "hr_leave_policy.md",
+      "document_id": "hr_leave_policy",
+      "chunk_id": "chunk_0007"
+    }
+  },
+  {
+    "page_content": "### 3.2 Approval Process\n\n- **Standard requests:** Auto-approved if compliant with this policy and within entitlements\n- **Manager-flagged requests:** Require explicit manager and HR approval (2-3 working days)\n- **Policy-exception requests:** Require HR Director approval (3-5 working days)\n- **Emergencies:** May be approved verbally with written confirmation within 24 hours\n\n### 3.3 Cancellation and Rescheduling",
+    "metadata": {
+      "source": "hr_leave_policy.md",
+      "document_id": "hr_leave_policy",
+      "chunk_id": "chunk_0008"
+    }
+  },
+  {
+    "page_content": "### 3.3 Cancellation and Rescheduling\n\n- Cancellations may be submitted up to 48 hours before leave commencement\n- Rescheduling is treated as a new request and must follow approval procedures\n- Last-minute cancellations by employees within 48 hours may trigger disciplinary review if habitual\n\n---\n\n## 4. Special Leave Types\n\n### 4.1 Sick Leave",
+    "metadata": {
+      "source": "hr_leave_policy.md",
+      "document_id": "hr_leave_policy",
+      "chunk_id": "chunk_0009"
+    }
+  },
+  {
+    "page_content": "---\n\n## 4. Special Leave Types\n\n### 4.1 Sick Leave\n\n- Unlimited sick leave if supported by medical documentation\n- First 3 consecutive days: Manager approval\n- Beyond 3 consecutive days: Medical certificate required + HR approval\n\n### 4.2 Bereavement Leave\n\n- Up to 5 days for immediate family members (spouse, children, parents, siblings)\n- Up to 2 days for extended family members\n- Must provide death certificate or manager verification\n\n### 4.3 Compassionate Leave",
+    "metadata": {
+      "source": "hr_leave_policy.md",
+      "document_id": "hr_leave_policy",
+      "chunk_id": "chunk_0010"
+    }
+  },
+  {
+    "page_content": "### 4.3 Compassionate Leave\n\n- Up to 3 days for serious personal or family circumstances\n- Requires HR approval\n- Not deducted from annual leave entitlement\n\n### 4.4 Maternity/Paternity Leave\n\n- Governed by statutory entitlements and supplementary company policy\n- See Maternity/Paternity Leave Policy (POL-HR-MATERNITY-2024)\n\n---\n\n## 5. Leave During Notice Period",
+    "metadata": {
+      "source": "hr_leave_policy.md",
+      "document_id": "hr_leave_policy",
+      "chunk_id": "chunk_0011"
+    }
+  },
+  {
+    "page_content": "---\n\n## 5. Leave During Notice Period\n\n- Employees on notice to terminate retain all leave entitlements\n- Leave during notice period requires manager and HR approval\n- Unused leave may be paid out at the time of separation\n\n---\n\n## 6. Public Holidays\n\n- Company observes 12 public holidays per calendar year\n- Public holidays do not count toward annual leave\n- If required to work on a public holiday, employees receive a replacement day off or agreed compensation\n\n---",
+    "metadata": {
+      "source": "hr_leave_policy.md",
+      "document_id": "hr_leave_policy",
+      "chunk_id": "chunk_0012"
+    }
+  },
+  {
+    "page_content": "---\n\n## 7. Employee Status Exceptions\n\n### 7.1 Probationary Employees\n\n- Limited to 5 days leave during first 3 months\n- After 3 months: Full entitlements apply\n- Probationary leave requires manager approval\n\n### 7.2 Part-Time Employees\n\n- Entitled to pro-rata leave based on contracted hours\n- Calculation: (Annual entitlement × Contracted hours) / Full-time hours per week\n\n### 7.3 Fixed-Term Contract Employees",
+    "metadata": {
+      "source": "hr_leave_policy.md",
+      "document_id": "hr_leave_policy",
+      "chunk_id": "chunk_0013"
+    }
+  },
+  {
+    "page_content": "### 7.3 Fixed-Term Contract Employees\n\n- Entitled to pro-rata leave based on contract duration\n- Unused leave paid out on contract termination\n\n### 7.4 Employees on Suspension\n\n- Leave cannot be taken while employee is suspended\n- Suspended leave is forfeited unless suspension is lifted\n\n---\n\n## 8. Compliance and Enforcement\n\n### 8.1 Policy Violations",
+    "metadata": {
+      "source": "hr_leave_policy.md",
+      "document_id": "hr_leave_policy",
+      "chunk_id": "chunk_0014"
+    }
+  },
+  {
+    "page_content": "---\n\n## 8. Compliance and Enforcement\n\n### 8.1 Policy Violations\n\n- Unauthorized absence is treated as a disciplinary matter\n- Repeated violations may result in suspension or termination\n- Leave taken without approval may be unpaid\n\n### 8.2 Disputes\n\n- Employees may appeal leave denial through the HR dispute process\n- Appeals must be submitted within 10 working days of denial\n- Final authority resides with the HR Director\n\n### 8.3 Policy Updates",
+    "metadata": {
+      "source": "hr_leave_policy.md",
+      "document_id": "hr_leave_policy",
+      "chunk_id": "chunk_0015"
+    }
+  },
+  {
+    "page_content": "### 8.3 Policy Updates\n\nThis policy may be updated at any time by the HR Director with 30 days' notice to all employees.\n\n---\n\n## 9. Contact and Support\n\nFor questions regarding this policy:\n\n- **HR Department:** hr@tracelens.corp\n- **Leave System:** https://leave.tracelens.corp\n- **Manager:** Your direct manager\n\n---\n\n**Document Custodian:** HR Department  \n**Last Review Date:** January 2024  \n**Next Review Date:** January 2025  \n**Classification:** Internal Use Only",
+    "metadata": {
+      "source": "hr_leave_policy.md",
+      "document_id": "hr_leave_policy",
+      "chunk_id": "chunk_0016"
+    }
+  }
+]

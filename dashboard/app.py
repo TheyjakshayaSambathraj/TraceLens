@@ -26,33 +26,8 @@ from typing import Optional
 import requests
 import streamlit as st
 
-def _get_api_base() -> str:
-    # 1. Environment variables
-    raw = os.environ.get("TRACELES_API_URL") or os.environ.get("TRACELENS_API_URL")
-
-    # 2. Streamlit secrets
-    if not raw:
-        try:
-            if hasattr(st, "secrets") and st.secrets:
-                raw = st.secrets.get("TRACELES_API_URL") or st.secrets.get("TRACELENS_API_URL")
-        except Exception:
-            pass
-
-    # 3. Local fallback
-    if not raw:
-        raw = "http://localhost:8000/api/v1"
-
-    raw = raw.strip().rstrip("/")
-    if not raw.endswith("/api/v1"):
-        return f"{raw}/api/v1"
-    return raw
-
-
-API_BASE = _get_api_base()
-REQUEST_TIMEOUT = 30
-
 # ---------------------------------------------------------------------------
-# Page configuration
+# Page configuration (MUST BE FIRST STREAMLIT COMMAND)
 # ---------------------------------------------------------------------------
 
 st.set_page_config(
@@ -64,6 +39,23 @@ st.set_page_config(
         "About": "TraceLens — Enterprise AI Decision Governance Platform",
     },
 )
+
+def _get_api_base() -> str:
+    # 1. Environment variables
+    raw = os.environ.get("TRACELES_API_URL") or os.environ.get("TRACELENS_API_URL")
+
+    # 2. Local fallback
+    if not raw:
+        raw = "http://localhost:8000/api/v1"
+
+    raw = raw.strip().rstrip("/")
+    if not raw.endswith("/api/v1"):
+        return f"{raw}/api/v1"
+    return raw
+
+
+API_BASE = _get_api_base()
+REQUEST_TIMEOUT = 30
 
 # ---------------------------------------------------------------------------
 # Custom CSS

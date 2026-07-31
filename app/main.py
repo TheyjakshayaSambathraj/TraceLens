@@ -128,6 +128,20 @@ def create_app() -> FastAPI:
             allow_headers=["*"],
         )
 
+    @application.exception_handler(Exception)
+    async def global_exception_handler(request, exc: Exception):
+        import traceback
+        logger.error("unhandled_exception", path=request.url.path, error=str(exc))
+        from fastapi.responses import JSONResponse
+        return JSONResponse(
+            status_code=500,
+            content={
+                "detail": str(exc),
+                "type": type(exc).__name__,
+                "traceback": traceback.format_exc().split("\n"),
+            },
+        )
+
     @application.get("/")
     async def root() -> dict[str, str]:
         return {

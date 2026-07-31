@@ -37,17 +37,7 @@ class RetrieverService:
             vector_store_path: Path to the persisted index.
             embedding_model: Embedding model identifier (kept for compatibility).
             top_k: Number of documents to retrieve per query.
-
-        Raises:
-            FileNotFoundError: If the vector store has not been created yet.
         """
-        if not os.path.exists(vector_store_path):
-            logger.error("vector_store_missing", path=vector_store_path)
-            raise FileNotFoundError(
-                f"Vector store not found at {vector_store_path}. "
-                "Run ingestion first with: python -m app.rag.ingest"
-            )
-
         self.vector_store_path = vector_store_path
         self.embedding_model = embedding_model
         self.top_k = top_k

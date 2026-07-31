@@ -45,12 +45,16 @@ def _get_engine() -> Engine:
         connect_args = {}
         if "sqlite" in settings.database_url:
             connect_args["check_same_thread"] = False
+            if ":memory:" not in settings.database_url:
+                import os
+                db_path = settings.database_url.replace("sqlite:////", "/").replace("sqlite:///", "").replace("sqlite://", "")
+                db_dir = os.path.dirname(db_path)
+                if db_dir:
+                    os.makedirs(db_dir, exist_ok=True)
 
         _engine = create_engine(
             settings.database_url,
             connect_args=connect_args,
-            # Connection pool size for SQLite should be 1 in production,
-            # but StaticPool is better for in-memory test DBs.
             echo=False,
         )
 

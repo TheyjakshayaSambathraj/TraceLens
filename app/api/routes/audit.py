@@ -136,7 +136,7 @@ def decide(
         logger.error("agent_decide_unexpected_error", error=str(exc), exc_info=True)
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Decision failed. See server logs.",
+            detail=f"Decision failed: {str(exc)}",
         )
 
 
